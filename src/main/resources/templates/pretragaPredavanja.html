@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="htmlFragments/usualHtml.html :: headFrag">
+</head>
+
+<body>
+	
+	<header th:replace="htmlFragments/usualHtml.html :: headerFrag">
+	</header>
+	
+	<main>
+	
+		<img th:src="@{/images/science.png}" /><br/>
+		
+		<select th:replace="htmlFragments/usualHtml.html :: selectLanguageFrag"> 
+		</select>
+		
+		<br/><br/>
+		
+		<div sec:authorize="isAuthenticated()">
+			<form method="POST" th:action="@{/logout}">
+				<button th:text="#{msg.button.logout}" type="submit" value="Logout" class="gumbek" ></button>
+				<span th:text="#{msg.whohaslogedinintro}">Ulogirani ste kao</span> 
+				<span th:text="#{msg.whohaslogedin}" sec:authentication="name">Korisnik</span>.
+			</form>
+		</div>
+		<br>
+		
+		<form method="POST" th:action="@{pretraga}">
+			<table>
+				<tr>
+					<td><label for="predavanjePretraga.tema" th:text="#{msg.text.search}">Predavanje tema:</label></td>
+					<td><input type="text" /></td>
+					<td><button class="gumbek" type="submit" value="Pretraži" th:text="#{msg.button.search}"></button></td>
+				</tr>
+			</table>
+		</form>
+		<table>
+				<tr th:each="predavanje : ${popisPredavanja}">
+					<td th:if="${predavanjePretraga.tema}==${popisPredavanja.tema}">
+						<table>
+							<tr>
+								<td>
+									<span th:text="${predavanje.tema}">TEMA</span>
+								</td>
+								<td>
+									<span th:text="${predavanje.kratkiSadrzaj}">SADRZAJ</span>
+								</td>
+								<td>
+									<span th:text="${predavanje.vrsta}">VRSTA</span>
+								</td>
+								<td>
+									<span th:text="${predavanje.datumUpisa}">VRSTA</span>
+								</td>
+								<td>
+									<span th:text="${predavanje.predavac.ime}">PREDAVAC.IME</span>
+								</td>
+								<td>
+									<span th:text="${predavanje.predavac.pozicija}">PREDAVAC.POZICIJA</span>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		<br>
+		<a class="gumbek" th:href="@{/predavanja/novo}" th:text="#{msg.button.submitLecture}">Predloži predavanje</a>
+		<br><br>
+	</main>
+	<footer><p>	&copy Matija Dupan<p></footer>
+</body>
+</html>

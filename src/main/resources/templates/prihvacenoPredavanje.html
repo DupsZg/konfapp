@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="htmlFragments/usualHtml.html :: headFrag">
+</head>
+
+<body>
+	
+	<header th:replace="htmlFragments/usualHtml.html :: headerFrag">
+	</header>
+	
+	<main>
+		<img th:src="@{/images/science.png}" /><br/>
+		
+		<select th:replace="htmlFragments/usualHtml.html :: selectLanguageFrag"> 
+		</select>	
+		
+		<br/><br/>
+		
+		<h3>
+			<span th:text="#{msg.congrats}">Čestitamo Vaše predavanje je prihvaćeno.Ovo je </span>
+			<span th:text="${session.listaPredavanja.size()}"></span>
+			<span th:text="#{msg.congrats2}"></span>
+		</h3>
+		<br>
+		
+		<div sec:authorize="isAuthenticated()">
+			<form method="POST" th:action="@{/logout}">
+				<button th:text="#{msg.button.logout}" type="submit" value="Logout" class="gumbek" ></button>
+				<span th:text="#{msg.whohaslogedinintro}">Ulogirani ste kao</span> 
+				<span th:text="#{msg.whohaslogedin}" sec:authentication="name">Korisnik</span>.
+			</form>
+		</div>
+		<br>
+		<a th:text="#{msg.button.alllectures}" class="gumbek" th:href="@{unesenaPredavanja}">Sva predavanja</a>
+		<br><br>
+		
+		<a  th:text="#{msg.button.searchlectures}" class="gumbek" th:href="@{pretraga}">Pretraga predavanja</a>
+		
+		<br><br>
+		
+		<div sec:authorize="hasRole('ROLE_ADMIN')" >
+			<div th:unless="${predavanje.objavljeno}" >
+				<h5 th:text="#{msg.published}">Predavanje nije objavljeno u programu konferencije.</h5>
+			</div>
+			<div th:if="${predavanje.objavljeno}" >
+				<h5 th:text="#{msg.notpublished}">Predavanje je objavljeno i vidljivo u programu konferencije.</h5>
+			</div>
+		</div>
+		
+		<a class="gumbek" th:href="@{/predavanja/resetirajBrojac}" th:text="#{msg.button.resetCounter}">RESTARTIRAJ BROJAČ</a></br>
+		<label th:text="#{msg.lecturer}">Predavač: </label><span th:text="${predavanje.predavac.ime}"></span><br/>
+		<label th:text="#{msg.position}">Pozicija u firmi: </label><span th:text="${predavanje.predavac.pozicija}"></span><br/>
+		<label th:text="#{msg.theme}">Tema: </label><span th:text="${predavanje.tema}"></span><br/>
+		<label th:text="#{msg.shortcontetnt}">Kratki sadržaj: </label><span th:text="${predavanje.kratkiSadrzaj}"></span><br/>
+		<label th:text="#{msg.typelectur}">Vrsta predavanja: </label><span th:text="${predavanje.vrsta}"></span><br/>
+		
+		<a class="gumbek" th:href="@{novo}" th:text="#{msg.button.back}">Povratak</a>
+	</main>
+	<footer><p>&copy Matija Dupan<p></footer>
+</body>
+</html>

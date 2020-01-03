@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="htmlFragments/usualHtml.html :: headFrag">
+</head>
+
+<body onload='document.f.j_username.focus();'>
+
+	<header th:replace="htmlFragments/usualHtml.html :: headerFrag">
+		<h3>Login with User name and Password</h3>
+	</header>
+	
+	<main>
+	
+		<img th:src="@{images/science.png}" /><br/>
+		
+		<select th:replace="htmlFragments/usualHtml.html :: selectLanguageFrag"> 
+		</select>
+		<br/><br/>
+		
+		<form name='f' method='POST' action='/login'>
+			<table>
+			<tr>
+				<td th:text="#{msg.user}">User:</td>
+				<td><input type='text' name='username' value=''></td>
+			</tr>
+			<tr>
+				<td th:text="#{msg.pass}">Password:</td>
+				<td><input type='password' name='password'/></td>
+			</tr>
+			<tr>
+				<td><label th:text="#{msg.remember}" for="remember_me">Zapamti me?</label></td>
+				<td><input id="remember_me" name="remember_me" type="checkbox" value=”true”/></td>
+			</tr>
+			<tr>
+				<td><input type="hidden" name="_csrf" th:value="${_csrf.token}"/></td>
+				<td><button th:text="#{msg.button.login}" class="gumbek" name="submit" type="submit"/></button></td>
+			</tr>
+			</table>
+		</form>
+		
+	</main>
+	
+	<footer><p>	&copy Matija Dupan<p></footer>
+	
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="htmlFragments/usualHtml.html :: headFrag">
+</head>
+
+<body>
+
+	<header th:replace="htmlFragments/usualHtml.html :: headerFrag">
+	</header>
+	
+	<main>
+		<img th:src="@{images/science.png}" /><br/>
+		
+		<select th:replace="htmlFragments/usualHtml.html :: selectLanguageFrag"> 
+		</select>
+		
+		<br/><br/>
+		<a class="gumbek" th:text="#{msg.button.submitLecture}" th:href="@{predavanja/novo}">Predloži novo predavanje</a>
+	</main>
+	
+	<footer><p>	&copy Matija Dupan<p></footer>
+	
+</body>
+</html>

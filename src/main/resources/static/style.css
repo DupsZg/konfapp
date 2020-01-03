@@ -1,0 +1,56 @@
+@charset "UTF-8";
+
+main{
+	width:940px;
+	height:900px;
+	margin:0 auto;
+}
+img{
+	width:200px;
+	height:200px;
+}
+
+
+
+a:link, a:visited {
+    background-color: #808080;
+    color: white;
+    padding: 14px 25px;
+    text-align: center; 
+    text-decoration: none;
+    display: inline-block;
+}
+
+a:hover, a:active {
+    background-color: #004080;
+}
+
+#submitGumb{
+	background-color: #808080;
+    color: white;
+    padding: 14px 25px;
+    text-align: center; 
+    text-decoration: none;
+    display: inline-block;
+}
+
+#submitGumb:hover, #submitGumb:active{
+	background-color: #004080;
+}
+header{
+	background-color:#a9a8a8;
+}
+header h1{
+	width:940px;
+	margin:0 auto;
+	padding:10px;
+}
+footer{
+	background-color:#a9a8a8;
+}
+footer p{
+	width:940px;
+	padding:10px;
+	margin:0 auto;
+	text-align: center;
+}

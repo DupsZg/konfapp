@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="headFrag">
+	<meta charset="UTF-8">
+	<title>Konferencija2018</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+	<script th:src="@{/jQuery/jquery-3.3.1.js}"></script>
+	<script type="text/javascript" th:src="@{/promjenaJezika.js}"></script>
+	
+</head>
+<body>
+	<header th:fragment="headerFrag">
+		<h1 th:text="#{msg.title}">Konferencija 2018</h1>
+	</header>
+	
+	<select th:fragment="selectLanguageFrag" id="locales"> 
+			 <option value="hr" th:selected="${#locale.language == 'hr'}" th:text="#{msg.lang.hr}"></option>
+			 <option value="en" th:selected="${#locale.language == 'en'}" th:text="#{msg.lang.en}"></option>
+			 <option value="de" th:selected="${#locale.language == 'de'}" th:text="#{msg.lang.de}"></option>
+	</select>
+	
+</body>
+</html>

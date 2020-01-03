@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="htmlFragments/usualHtml.html :: headFrag">
+</head>
+
+<body>
+
+	<header th:replace="htmlFragments/usualHtml.html :: headerFrag">
+	</header>
+	
+	<main>
+		<img th:src="@{/images/science.png}" /><br/>
+		
+		<select th:replace="htmlFragments/usualHtml.html :: selectLanguageFrag"> 
+		</select>
+		
+		<br/><br/>
+		
+		<div sec:authorize="isAuthenticated()">
+			<form method="POST" th:action="@{/logout}">
+				<button th:text="#{msg.button.logout}" type="submit" value="Logout" class="gumbek" ></button>
+				<span th:text="#{msg.whohaslogedinintro}">Ulogirani ste kao</span> 
+				<span th:text="#{msg.whohaslogedin}" sec:authentication="name">Korisnik</span>.
+			</form>
+		</div>
+		<br>
+		<a th:text="#{msg.button.alllectures}" class="gumbek" th:href="@{unesenaPredavanja}">Sva predavanja</a>
+		<br><br>
+		
+		<a  th:text="#{msg.button.searchlectures}" class="gumbek" th:href="@{pretraga}">Pretraga predavanja</a>
+		
+		<br><br>
+		
+		<form method="POST" th:object="${predavanje}">
+			<table>
+				<tr>
+					<td><label th:text="#{msg.lecturer}" for="predavac.ime">Predavač: </label></td>
+					<td><input type="text" th:field="*{predavac.ime}" /></td>
+					<td><span th:if="${#fields.hasErrors('predavac.ime')}" th:errors="*{predavac.ime}">Predavač ime error!</span></td>
+				</tr>
+				<tr>
+					<td><label th:text="#{msg.position}" for="predavac.pozicija">Pozicija u firmi: </label></td>
+					<td>
+						<select   th:field="*{predavac.pozicija}">
+							<option value="" th:text="#{msg.enum.positionplaceholder}">---Odaberite vrijednost---</option>
+							<option th:each="pozicija : ${pozicije}" th:value="${pozicija}" th:text="#{'msg.enum.position.'+${{pozicija}}}"></option>
+						</select>
+					</td>
+					<td><span th:if="${#fields.hasErrors('predavac.pozicija')}" th:errors="*{predavac.pozicija}">Predavač nije odabran!</span></td>
+				</tr>
+				<tr>
+					<td><label th:text="#{msg.theme}" for="tema">Tema: </label></td>
+					<td><input type="text" th:field="*{tema}" /></td>
+					<td><span th:if="${#fields.hasErrors('tema')}" th:errors="*{tema}">Tema ime error!</span></td>
+				</tr>
+				<tr>
+					<td><label th:text="#{msg.shortcontetnt}" for="kratkiSadrzaj">Kratki sadržaj: </label></td>
+					<td><textarea  th:field="*{kratkiSadrzaj}" rows=10 cols="35" ></textarea></td>
+					<td><span th:if="${#fields.hasErrors('kratkiSadrzaj')}" th:errors="*{kratkiSadrzaj}">Kratki sadržaj ime error!</span></td>
+				</tr>
+				<tr>
+					<td><label th:text="#{msg.typelectur}" for="vrsta">Vrsta predavanja: </label></td>
+					<td>
+						<select th:field="*{vrsta}">
+						<option th:text="#{msg.enum.typeplaceholder}" value="" >---Odaberite vrijednost---</option>
+						<option th:each="vrsta : ${vrste}" th:value="${vrsta}" th:text="#{'msg.enum.type.'+${{vrsta}}}"></option>
+						</select>
+					</td>
+					<td><span th:if="${#fields.hasErrors('vrsta')}" th:errors="*{vrsta}">Vrsta nije odabrana!</span></td>
+				</tr>
+				<tr>
+					<td>
+						<div sec:authorize="hasRole('ROLE_ADMIN')">
+							<div>
+        						<label><input th:text="#{msg.chekbox.published}" type="checkbox" th:field="${predavanje.objavljeno}">Objavi predavanje</label>
+      						</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td><input type="hidden" name="_csrf" th:value="${_csrf.token}"/></td>
+					<td><button th:text="#{msg.button.submitLecture}" class="gumbek" type="submit" value="Predaj prijedlog predavanja"></button></td>
+				</tr>
+			</table>
+		</form>
+	</main>
+	<footer><p>&copy Dupan<p></footer>
+</body>
+</html>
